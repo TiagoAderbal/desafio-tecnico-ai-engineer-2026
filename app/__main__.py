@@ -20,7 +20,9 @@ def main() -> None:
         if not message:
             continue
         try:
-            print(f"Empório: {agent.reply(message)}\n")
+            print(f"Consultando ({agent.provider_name})...", flush=True)
+            response = agent.reply(message)
+            print(f"Empório: {response}\n")
         except Exception as exc:
             print(f"Empório: Tive um problema ao consultar as informações. A equipe pode ajudar você por aqui.\nDetalhe técnico: {exc}\n")
 

@@ -71,8 +71,9 @@ class SupportAgent:
         if GEMINI_API_KEY:
             try:
                 from google import genai
+                from google.genai import types
 
-                self._client = genai.Client(api_key=GEMINI_API_KEY)
+                self._client = genai.Client(api_key=GEMINI_API_KEY, http_options=types.HttpOptions(timeout=45000))
             except ImportError as exc:
                 raise RuntimeError("Instale as dependências com `pip install -r requirements.txt`.") from exc
 
