@@ -24,8 +24,7 @@ def main() -> None:
             response = agent.reply(message)
             print(f"Empório: {response}\n")
         except Exception as exc:
-            print(f"Empório: Tive um problema ao consultar as informações. A equipe pode ajudar você por aqui.\nDetalhe técnico: {exc}\n")
-
+            print(f"Emp\u00f3rio: A consulta falhou ({type(exc).__name__}). Confira modelo, conex\u00e3o e configura\u00e7\u00e3o. N\u00e3o compartilhe a chave da API.")
 
 if __name__ == "__main__":
     main()

@@ -48,7 +48,11 @@ def search_products(query: str, max_price: float | None = None, available_only: 
         if available_only and stock <= 0:
             continue
         price = float(row["price_brl"])
-        if max_price is not None and price > max_price:
+        promotion = promotions.get(row["product_id"])
+        effective_price = price
+        if promotion:
+            effective_price *= 1 - float(promotion["discount_percent"]) / 100
+        if max_price is not None and effective_price > max_price:
             continue
         name = _text(row["name"])
         category = categories.get(row["category_id"], "Instrumento musical")

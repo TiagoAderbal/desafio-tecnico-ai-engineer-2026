@@ -14,7 +14,7 @@ Copy-Item .env.example .env
 python -m app
 ```
 
-Sem `GEMINI_API_KEY`, o agente usa um modo local simples que permite experimentar as consultas sem instalar nem chamar um provedor externo. Para habilitar o Gemini, preencha `GEMINI_API_KEY` no `.env`. `GEMINI_MODEL` é opcional e, por padrão, usa `gemini-3.8-flash`.
+Sem `GEMINI_API_KEY`, o agente usa um modo local simples que permite experimentar as consultas sem instalar nem chamar um provedor externo. Para habilitar o Gemini, preencha `GEMINI_API_KEY` no `.env`. `GEMINI_MODEL` é opcional e, por padrão, usa `gemini-3.6-flash`.
 
 Exemplos:
 
@@ -67,3 +67,26 @@ Há quatro conversas em [`examples/`](examples/): busca de produto, dados da loj
 ## Uso de assistentes de código
 
 Codex foi usado para ler os materiais do desafio, estruturar o projeto, implementar o protótipo e documentar decisões. O código foi organizado para que as consultas operacionais sejam executadas por funções Python explícitas; respostas do modelo devem ser conferidas contra os dados e regras fornecidos.
+
+
+
+## Segurança e verificação
+
+- O prompt de sistema é enviado pelo campo `system_instruction` do Gemini, separado das mensagens do cliente.
+- Mensagens e resultados de ferramentas são tratados como dados não confiáveis; não há ferramenta para executar código, alterar pedidos ou acessar a rede.
+- Chamadas de ferramenta aceitam apenas argumentos esperados e validam tipos, tamanhos, faixas de preço e número do pedido.
+- Mensagens acima de 2.000 caracteres são recusadas; o histórico enviado ao modelo é limitado a 8 turnos; cada turno admite no máximo 4 chamadas de ferramenta e 4 rodadas.
+- E-mail, telefone, CPF, cartão e credenciais detectados são mascarados antes de enviar a conversa ao modelo. A verificação do pedido ocorre localmente contra o CSV, sem devolver dados cadastrais.
+- A chave permanece no `.env`, ignorado pelo Git. `store=False` e timeout de 45 segundos são usados nas chamadas do SDK.
+
+Essas medidas reduzem a superfície de ataque, mas não garantem imunidade total a prompt injection: respostas ainda são geradas por um modelo probabilístico. O impacto é limitado pela ausência de ferramentas com efeitos externos e pela validação local dos dados.
+
+Verificações automatizadas locais, sem chamada ao Gemini:
+
+```powershell
+python -m unittest discover -s tests -v
+```
+
+## Aderência ao enunciado
+
+O projeto usa Python, oferece uma CLI, define a persona da loja, consulta CSVs para produto/pedido, recupera regras do manual, trata perguntas fora do escopo e inclui quatro exemplos de conversa. O histórico local contém commits incrementais. A publicação do repositório no GitHub ainda precisa ser feita para cumprir o item de repositório público.
