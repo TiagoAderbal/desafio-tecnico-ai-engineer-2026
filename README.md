@@ -89,4 +89,4 @@ python -m unittest discover -s tests -v
 
 ## Aderência ao enunciado
 
-O projeto usa Python, oferece uma CLI, define a persona da loja, consulta CSVs para produto/pedido, recupera regras do manual, trata perguntas fora do escopo e inclui quatro exemplos de conversa. O histórico local contém commits incrementais. A publicação do repositório no GitHub ainda precisa ser feita para cumprir o item de repositório público.
+O projeto usa Python, oferece uma CLI, define a persona da loja, consulta CSVs para produto/pedido, recupera regras do manual, trata perguntas fora do escopo e inclui quatro exemplos de conversa. O histórico local contém commits incrementais. Repositório público: [desafio-tecnico-ai-engineer-2026](https://github.com/TiagoAderbal/desafio-tecnico-ai-engineer-2026).
