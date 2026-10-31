@@ -52,9 +52,11 @@ data/
 examples/            conversas representativas
 ```
 
-## Conversas de exemplo
+## Conversas e testes manuais
 
-Há quatro conversas em [`examples/`](examples/): busca de produto, dados da loja, verificação de pedido e aplicação da política de devolução. A resposta do modelo pode variar; os exemplos registram o comportamento pretendido e os dados que as ferramentas devem fornecer.
+A pasta [`examples/`](examples/) reúne seis conversas refeitas manualmente: busca de produto ([01](examples/01-catalogo.md)), informações da loja ([02](examples/02-informacoes-da-loja.md)), consulta de pedido ([03](examples/03-consulta-de-pedido.md)), política de devolução ([04](examples/04-politica-de-devolucao.md)), tentativa de obter uma chave de acesso ([05](examples/05-teste-de-seguranca.md)) e solicitação fora do escopo da loja ([06](examples/06-teste-prompt.md)).
+
+Os dois últimos registros documentam verificações conversacionais de segurança: o agente não deve revelar segredos nem abandonar o escopo de atendimento da loja. São exemplos manuais de comportamento observado, não testes automatizados nem garantia de resistência a toda forma de prompt injection. Como as respostas do Gemini podem variar, consulte também os testes automatizados abaixo para as regras que podem ser verificadas de forma determinística.
 
 ## Limitações e próximos passos
 
@@ -81,6 +83,8 @@ Codex foi usado para ler os materiais do desafio, estruturar o projeto, implemen
 
 Essas medidas reduzem a superfície de ataque, mas não garantem imunidade total a prompt injection: respostas ainda são geradas por um modelo probabilístico. O impacto é limitado pela ausência de ferramentas com efeitos externos e pela validação local dos dados.
 
+A suíte automatizada exercita a separação da instrução de sistema, mascaramento de dados pessoais e credenciais antes da chamada ao modelo, limites e tipos dos argumentos de ferramentas, lista permitida de ferramentas, validação do contato para consulta de pedidos, limite de histórico e interrupção de ciclos excessivos de ferramentas. Esses testes usam um cliente simulado e não chamam o Gemini.
+
 Verificações automatizadas locais, sem chamada ao Gemini:
 
 ```powershell
@@ -89,4 +93,4 @@ python -m unittest discover -s tests -v
 
 ## Aderência ao enunciado
 
-O projeto usa Python, oferece uma CLI, define a persona da loja, consulta CSVs para produto/pedido, recupera regras do manual, trata perguntas fora do escopo e inclui quatro exemplos de conversa. O histórico local contém commits incrementais. Repositório público: [desafio-tecnico-ai-engineer-2026](https://github.com/TiagoAderbal/desafio-tecnico-ai-engineer-2026).
+O projeto usa Python, oferece uma CLI, define a persona da loja, consulta CSVs para produto/pedido, recupera regras do manual, trata perguntas fora do escopo e inclui seis conversas de exemplo, entre elas dois cenários manuais de segurança. O histórico local contém commits incrementais. Repositório público: [desafio-tecnico-ai-engineer-2026](https://github.com/TiagoAderbal/desafio-tecnico-ai-engineer-2026).
